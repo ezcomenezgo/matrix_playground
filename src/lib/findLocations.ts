@@ -2,7 +2,7 @@ import type { Board } from '@/type/board'
 import { isFibonacciNum, isFibSeq } from './validations';
 
 export default function findLocations(board: Board) {
-  const locations = [];
+  const locations: [number, number][] = [];
   // use for loop to check every cells in board's row
   for (let i = 0; i < board.length; i++) {
     const row = board[i]

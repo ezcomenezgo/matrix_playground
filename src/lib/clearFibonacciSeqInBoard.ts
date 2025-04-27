@@ -1,6 +1,6 @@
 import type { Board } from '@/type/board'
 
-export default function clearFibonacciSeqInBoard(board: Board, locations: number[][]) {
+export default function clearFibonacciSeqInBoard(board: Board, locations: [number, number][]) {
   const nextBoard = board
 
   locations.forEach((location) => {
