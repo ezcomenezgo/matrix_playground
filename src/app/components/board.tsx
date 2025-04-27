@@ -2,6 +2,7 @@
 import type { Board } from '@/type/board'
 import { useState } from 'react'
 import updateRelativeCellsOfClickedCell from '@/lib/valueIncrementByOne'
+import findLocations from '@/lib/findLocations'
 
 export default function Board() {
   const [board, setBoard] = useState(
@@ -15,6 +16,11 @@ export default function Board() {
       rowIdx,
       colIdx
     )
+
+    // find locations
+    const locations = findLocations(firstUpdatedMatrix)
+
+    console.log(locations)
 
     setBoard(firstUpdatedMatrix)
   }
