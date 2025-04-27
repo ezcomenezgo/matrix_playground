@@ -1,11 +1,11 @@
-import type { Board } from '@/type/board'
+import type { Matrix } from '@/type/matrix'
 import { isFibonacciNum, isFibSeq } from './validations';
 
-export default function findLocations(board: Board) {
+export default function findLocations(matrix: Matrix) {
   const locations: [number, number][] = [];
-  // use for loop to check every cells in board's row
-  for (let i = 0; i < board.length; i++) {
-    const row = board[i]
+  // use for loop to check every cells in matrix's row
+  for (let i = 0; i < matrix.length; i++) {
+    const row = matrix[i]
     for (let j = 0; j < row.length; j++) {
       const curNum = row[j]
       if (isFibonacciNum(curNum)) {
@@ -19,11 +19,11 @@ export default function findLocations(board: Board) {
     }
   }
 
-  // use for loop to check every cells in board's col
-  for (let i = 0; i < board.length; i++) {
+  // use for loop to check every cells in matrix's col
+  for (let i = 0; i < matrix.length; i++) {
     const col = []
-    for (let j = 0; j < board[0].length; j++) {
-      const cell = board[j][i]
+    for (let j = 0; j < matrix[0].length; j++) {
+      const cell = matrix[j][i]
       col.push(cell)
     }
 

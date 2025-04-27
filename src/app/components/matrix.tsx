@@ -1,22 +1,22 @@
 'use client'
-import type { Board } from '@/type/board'
+import type { Matrix } from '@/type/matrix'
 import { useState } from 'react'
 import updateRelativeCellsOfClickedCell from '@/lib/valueIncrementByOne'
 import findLocations from '@/lib/findLocations'
-import clearFibonacciSeqInBoard from '@/lib/clearFibonacciSeqInBoard'
+import clearFibonacciSeqInMatrix from '@/lib/clearFibonacciSeqInMatrix'
 
-export default function Board() {
-  const [board, setBoard] = useState(
+export default function Matrix() {
+  const [matrix, setMatrix] = useState(
     Array.from({ length: 50 }, () => Array(50).fill(0))
   )
 
   const [highlightCells, setHighlightCells] = useState<[number, number][]>([])
   const [greenCells, setGreenCells] = useState<[number, number][]>([])
 
-  function handleBoard(board: Board, rowIdx: number, colIdx: number) {
+  function handleMatrix(matrix: Matrix, rowIdx: number, colIdx: number) {
     // update relative cells increased by 1
     const firstUpdatedMatrix = updateRelativeCellsOfClickedCell(
-      board,
+      matrix,
       rowIdx,
       colIdx
     )
@@ -24,8 +24,8 @@ export default function Board() {
     // find locations
     const locations = findLocations(firstUpdatedMatrix)
 
-    // update the result board
-    const resultUpdateMatrix = clearFibonacciSeqInBoard(
+    // update the result matrix
+    const resultUpdateMatrix = clearFibonacciSeqInMatrix(
       firstUpdatedMatrix,
       locations
     )
@@ -35,11 +35,11 @@ export default function Board() {
     setGreenCells(locations)
     setTimeout(() => setGreenCells([]), 500)
 
-    setBoard(resultUpdateMatrix)
+    setMatrix(resultUpdateMatrix)
   }
 
   function highlightYellowToIncreasedCells(
-    resultUpdateMatrix: Board,
+    resultUpdateMatrix: Matrix,
     rowIdx: number,
     colIdx: number
   ) {
@@ -70,7 +70,7 @@ export default function Board() {
 
   return (
     <div>
-      {board.map((row, rowIdx) => (
+      {matrix.map((row, rowIdx) => (
         <div key={rowIdx} className="flex">
           {row.map((cell, colIdx) => (
             <div
@@ -80,7 +80,7 @@ export default function Board() {
                 ${isHighlighted(rowIdx, colIdx) ? 'bg-yellow-500' : ''}
                 ${isGreen(rowIdx, colIdx) ? 'bg-green-600' : ''}
               `}
-              onClick={() => handleBoard(board, rowIdx, colIdx)}
+              onClick={() => handleMatrix(matrix, rowIdx, colIdx)}
             >
               {cell !== 0 && cell}
             </div>
