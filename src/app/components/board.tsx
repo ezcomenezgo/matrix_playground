@@ -3,6 +3,7 @@ import type { Board } from '@/type/board'
 import { useState } from 'react'
 import updateRelativeCellsOfClickedCell from '@/lib/valueIncrementByOne'
 import findLocations from '@/lib/findLocations'
+import clearFibonacciSeqInBoard from '@/lib/clearFibonacciSeqInBoard'
 
 export default function Board() {
   const [board, setBoard] = useState(
@@ -20,9 +21,13 @@ export default function Board() {
     // find locations
     const locations = findLocations(firstUpdatedMatrix)
 
-    console.log(locations)
+    // update the result board
+    const resultUpdateMatrix = clearFibonacciSeqInBoard(
+      firstUpdatedMatrix,
+      locations
+    )
 
-    setBoard(firstUpdatedMatrix)
+    setBoard(resultUpdateMatrix)
   }
 
   return (
