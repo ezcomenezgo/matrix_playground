@@ -1,6 +1,6 @@
 import type { Matrix } from "@/type/matrix"
 
-export default function updateRelativeCellsOfClickedCell(matrix: Matrix, rowIdx: number, colIdx: number): Matrix {
+export default function valueIncrementByOne(matrix: Matrix, rowIdx: number, colIdx: number): Matrix {
   const nextMatrix = matrix.map(row => [...row])
 
   for (let i = 0; i <= nextMatrix[rowIdx].length - 1; i++) {

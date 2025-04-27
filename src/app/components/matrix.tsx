@@ -1,7 +1,7 @@
 'use client'
 import type { Matrix } from '@/type/matrix'
 import { useState } from 'react'
-import updateRelativeCellsOfClickedCell from '@/lib/valueIncrementByOne'
+import valueIncrementByOne from '@/lib/valueIncrementByOne'
 import findLocations from '@/lib/findLocations'
 import clearFibonacciSeqInMatrix from '@/lib/clearFibonacciSeqInMatrix'
 
@@ -15,11 +15,7 @@ export default function Matrix() {
 
   function handleMatrix(matrix: Matrix, rowIdx: number, colIdx: number) {
     // update relative cells increased by 1
-    const firstUpdatedMatrix = updateRelativeCellsOfClickedCell(
-      matrix,
-      rowIdx,
-      colIdx
-    )
+    const firstUpdatedMatrix = valueIncrementByOne(matrix, rowIdx, colIdx)
 
     // find locations
     const locations = findLocations(firstUpdatedMatrix)
