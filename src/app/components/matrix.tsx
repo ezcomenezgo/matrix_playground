@@ -3,7 +3,7 @@ import type { Matrix } from '@/type/matrix'
 import { useState } from 'react'
 import valueIncrementByOne from '@/lib/valueIncrementByOne'
 import {
-  findLocations,
+  findLocationsOfCellsToClear,
   findLocationsOfCellsToIncrease
 } from '@/lib/findLocations'
 import clearFibonacciSeqInMatrix from '@/lib/clearFibonacciSeqInMatrix'
@@ -27,19 +27,20 @@ export default function Matrix() {
       colIdx
     )
 
-    // find locations
-    const locations = findLocations(firstUpdatedMatrix)
+    // find locations about cells to clear
+    const clearedCellsLocations =
+      findLocationsOfCellsToClear(firstUpdatedMatrix)
 
     // update the result matrix
     const resultUpdateMatrix = clearFibonacciSeqInMatrix(
       firstUpdatedMatrix,
-      locations
+      clearedCellsLocations
     )
 
     // update the cell color
     setYellowCells(increasedCellsLocations)
     setTimeout(() => setYellowCells([]), 500)
-    setGreenCells(locations)
+    setGreenCells(clearedCellsLocations)
     setTimeout(() => setGreenCells([]), 500)
 
     setMatrix(resultUpdateMatrix)

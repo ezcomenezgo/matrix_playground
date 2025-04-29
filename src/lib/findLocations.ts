@@ -17,7 +17,7 @@ function findLocationsOfCellsToIncrease(matrix: Matrix, rowIdx: number, colIdx: 
   return locations
 }
 
-function findLocations(matrix: Matrix) {
+function findLocationsOfCellsToClear(matrix: Matrix) {
   const locations: [number, number][] = []
   // use for loop to check every cells in matrix's row
   for (let i = 0; i < matrix.length; i++) {
@@ -59,4 +59,4 @@ function findLocations(matrix: Matrix) {
   return locations
 }
 
-export { findLocationsOfCellsToIncrease, findLocations }
+export { findLocationsOfCellsToIncrease, findLocationsOfCellsToClear }
