@@ -1,8 +1,24 @@
 import type { Matrix } from '@/type/matrix'
 import { isFibonacciNum, isFibSeq } from './validations';
 
-export default function findLocations(matrix: Matrix) {
-  const locations: [number, number][] = [];
+function findLocationsOfCellsToIncrease(matrix: Matrix, rowIdx: number, colIdx: number) {
+  const locations: [number, number][] = []
+
+  for (let i = 0; i <= matrix[rowIdx].length - 1; i++) {
+    locations.push([rowIdx, i])
+  }
+
+  for (let i = 0; i <= matrix.length - 1; i++) {
+    if (i !== rowIdx) {
+      locations.push([i, colIdx])
+    }
+  }
+
+  return locations
+}
+
+function findLocations(matrix: Matrix) {
+  const locations: [number, number][] = []
   // use for loop to check every cells in matrix's row
   for (let i = 0; i < matrix.length; i++) {
     const row = matrix[i]
@@ -42,3 +58,5 @@ export default function findLocations(matrix: Matrix) {
 
   return locations
 }
+
+export { findLocationsOfCellsToIncrease, findLocations }

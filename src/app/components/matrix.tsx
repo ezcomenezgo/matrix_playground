@@ -2,7 +2,10 @@
 import type { Matrix } from '@/type/matrix'
 import { useState } from 'react'
 import valueIncrementByOne from '@/lib/valueIncrementByOne'
-import findLocations from '@/lib/findLocations'
+import {
+  findLocations,
+  findLocationsOfCellsToIncrease
+} from '@/lib/findLocations'
 import clearFibonacciSeqInMatrix from '@/lib/clearFibonacciSeqInMatrix'
 
 export default function Matrix() {
@@ -10,12 +13,19 @@ export default function Matrix() {
     Array.from({ length: 50 }, () => Array(50).fill(0))
   )
 
-  const [highlightCells, setHighlightCells] = useState<[number, number][]>([])
+  const [yellowCells, setYellowCells] = useState<[number, number][]>([])
   const [greenCells, setGreenCells] = useState<[number, number][]>([])
 
   function handleMatrix(matrix: Matrix, rowIdx: number, colIdx: number) {
     // update relative cells increased by 1
     const firstUpdatedMatrix = valueIncrementByOne(matrix, rowIdx, colIdx)
+
+    // find locations about cells to increase
+    const increasedCellsLocations = findLocationsOfCellsToIncrease(
+      firstUpdatedMatrix,
+      rowIdx,
+      colIdx
+    )
 
     // find locations
     const locations = findLocations(firstUpdatedMatrix)
@@ -27,37 +37,16 @@ export default function Matrix() {
     )
 
     // update the cell color
-    highlightYellowToIncreasedCells(resultUpdateMatrix, rowIdx, colIdx)
+    setYellowCells(increasedCellsLocations)
+    setTimeout(() => setYellowCells([]), 500)
     setGreenCells(locations)
     setTimeout(() => setGreenCells([]), 500)
 
     setMatrix(resultUpdateMatrix)
   }
 
-  function highlightYellowToIncreasedCells(
-    resultUpdateMatrix: Matrix,
-    rowIdx: number,
-    colIdx: number
-  ) {
-    const highlightYellowCells: [number, number][] = []
-
-    for (let i = 0; i < resultUpdateMatrix[rowIdx].length; i++) {
-      highlightYellowCells.push([rowIdx, i])
-    }
-
-    for (let i = 0; i < resultUpdateMatrix.length; i++) {
-      if (i !== rowIdx) {
-        highlightYellowCells.push([i, colIdx])
-      }
-    }
-
-    setHighlightCells(highlightYellowCells)
-
-    setTimeout(() => setHighlightCells([]), 500)
-  }
-
-  function isHighlighted(rowIdx: number, colIdx: number) {
-    return highlightCells.some(([r, c]) => r === rowIdx && c === colIdx)
+  function isYellow(rowIdx: number, colIdx: number) {
+    return yellowCells.some(([r, c]) => r === rowIdx && c === colIdx)
   }
 
   function isGreen(rowIdx: number, colIdx: number) {
@@ -73,7 +62,7 @@ export default function Matrix() {
               key={colIdx}
               className={`
                 w-6 h-6 border border-gray-300 flex items-center justify-center
-                ${isHighlighted(rowIdx, colIdx) ? 'bg-yellow-500' : ''}
+                ${isYellow(rowIdx, colIdx) ? 'bg-yellow-500' : ''}
                 ${isGreen(rowIdx, colIdx) ? 'bg-green-600' : ''}
               `}
               onClick={() => handleMatrix(matrix, rowIdx, colIdx)}
